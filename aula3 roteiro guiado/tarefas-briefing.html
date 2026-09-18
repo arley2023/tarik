@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Briefing — App de Tarefas</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap');
+  :root{
+    --bg:#14161c; --panel:#1c1f28; --panel-2:#232733; --ink:#e8eaf0; --muted:#8b91a4; --line:#2e3340;
+    --amber:#f5b642; --cyan:#5cc8e0; --green:#7bd88f; --pink:#e069a8; --purple:#b78af0;
+    --display:'Space Grotesk',sans-serif; --mono:'JetBrains Mono',monospace;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html,body{height:100%;}
+  body{background:var(--bg);color:var(--ink);font-family:var(--display);overflow:hidden;}
+  .deck{height:100vh;width:100vw;position:relative;}
+  .slide{position:absolute;inset:0;display:none;flex-direction:column;padding:5vh 6vw 8vh;overflow-y:auto;}
+  .slide.active{display:flex;animation:rise .4s cubic-bezier(.2,.7,.3,1);}
+  @keyframes rise{from{opacity:0;transform:translateY(12px);}to{opacity:1;transform:translateY(0);}}
+  @media (prefers-reduced-motion:reduce){.slide.active{animation:none;}}
+  .chrome{display:flex;align-items:center;gap:8px;font-family:var(--mono);font-size:13px;color:var(--muted);margin-bottom:3.5vh;flex-shrink:0;}
+  .dot{width:12px;height:12px;border-radius:50%;}
+  .dot.r{background:#ff5f57;}.dot.y{background:#febc2e;}.dot.g{background:#28c840;}
+  .chrome .path{margin-left:12px;}
+  .chrome .path b{color:var(--ink);font-weight:500;}
+  h1{font-size:clamp(2.2rem,5.5vw,4rem);font-weight:700;line-height:1.03;letter-spacing:-0.02em;}
+  h2{font-size:clamp(1.6rem,3.6vw,2.6rem);font-weight:600;letter-spacing:-0.015em;margin-bottom:3vh;}
+  h2 .num{font-family:var(--mono);color:var(--amber);font-weight:500;margin-right:14px;}
+  p{font-size:clamp(1.05rem,1.6vw,1.35rem);line-height:1.55;color:var(--muted);max-width:60ch;}
+  p strong{color:var(--ink);font-weight:500;}
+  .lead{font-size:clamp(1.15rem,2vw,1.5rem);color:var(--ink);}
+  .kicker{font-family:var(--mono);font-size:14px;color:var(--cyan);margin-bottom:3vh;}
+  .kicker::before{content:'// ';color:var(--line);}
+  code.inl{font-family:var(--mono);color:var(--cyan);font-size:.92em;}
+  .cols{display:grid;grid-template-columns:1fr 1fr;gap:3vw;align-items:center;flex:1;min-height:0;}
+  .stack{display:flex;flex-direction:column;gap:2.4vh;}
+  ul.clean{list-style:none;display:flex;flex-direction:column;gap:1.8vh;}
+  ul.clean li{display:flex;gap:14px;align-items:baseline;font-size:clamp(1.05rem,1.6vw,1.3rem);color:var(--ink);}
+  ul.clean li .m{font-family:var(--mono);color:var(--amber);flex-shrink:0;min-width:fit-content;}
+  ul.clean li div{color:var(--muted);}
+  ul.clean li strong{color:var(--ink);}
+  .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:26px 24px;}
+  .card .ic{font-size:1.6rem;margin-bottom:12px;}
+  .card h3{font-size:1.3rem;font-weight:600;margin-bottom:8px;}
+  .card p{font-size:1.02rem;}
+  .badge{display:inline-block;font-family:var(--mono);font-size:12px;background:var(--panel-2);border:1px solid var(--line);color:var(--muted);padding:4px 10px;border-radius:6px;}
+  .note{border-left:3px solid var(--amber);padding:2px 0 2px 18px;color:var(--muted);font-size:clamp(1rem,1.5vw,1.25rem);line-height:1.45;}
+  .note b{color:var(--amber);font-weight:500;}
+  .center{justify-content:center;align-items:flex-start;}
+  .footer{position:fixed;bottom:0;left:0;right:0;display:flex;align-items:center;justify-content:space-between;padding:14px 6vw;font-family:var(--mono);font-size:12px;color:var(--muted);pointer-events:none;}
+  .footer .count{color:var(--ink);}
+  .progress{position:fixed;top:0;left:0;height:3px;background:var(--amber);transition:width .3s ease;z-index:10;}
+  .hint{position:fixed;bottom:46px;right:6vw;font-family:var(--mono);font-size:11px;color:var(--line);}
+  .flow{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-top:1vh;}
+  .flow .step{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:16px 22px;font-family:var(--mono);font-size:clamp(.9rem,1.3vw,1.1rem);}
+  .flow .step b{color:var(--amber);}
+  .flow .arrow{color:var(--line);font-size:1.5rem;}
+  /* mock do app */
+  .mock{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:22px;display:flex;flex-direction:column;gap:12px;}
+  .mock .mrow{display:flex;gap:10px;}
+  .mock input{flex:1;background:#0f1116;border:1px solid var(--line);border-radius:8px;padding:10px 12px;color:var(--ink);font-family:var(--display);font-size:.95rem;}
+  .mock .addb{background:var(--amber);color:#14161c;border:none;border-radius:8px;padding:10px 16px;font-weight:600;font-family:var(--display);}
+  .mock ul{list-style:none;display:flex;flex-direction:column;gap:8px;}
+  .mock li{display:flex;align-items:center;justify-content:space-between;gap:10px;background:#0f1116;border:1px solid var(--line);border-radius:8px;padding:10px 12px;font-size:.92rem;border-left:4px solid var(--line);}
+  .mock li.pend{border-left-color:var(--amber);}
+  .mock li.done{border-left-color:var(--green);}
+  .mock li.done .txt{text-decoration:line-through;color:var(--muted);}
+  .mock li.canc{border-left-color:var(--pink);}
+  .mock li.canc .txt{color:var(--muted);opacity:.6;}
+  .mock .st{font-family:var(--mono);font-size:11px;padding:2px 7px;border-radius:5px;}
+  .mock li.pend .st{color:var(--amber);background:rgba(245,182,66,.12);}
+  .mock li.done .st{color:var(--green);background:rgba(123,216,143,.12);}
+  .mock li.canc .st{color:var(--pink);background:rgba(224,105,168,.12);}
+  .mock .acts{display:flex;gap:6px;margin-left:auto;}
+  .mock .acts button{background:transparent;border:1px solid var(--line);color:var(--muted);border-radius:6px;font-family:var(--mono);font-size:11px;padding:3px 7px;cursor:pointer;}
+</style>
+</head>
+<body>
+<div class="progress" id="progress"></div>
+<div class="deck" id="deck">
+
+  <section class="slide active center">
+    <div class="chrome"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="path">~/oficina-2/<b>tarefas.html</b></span></div>
+    <div class="kicker">segunda oficina · da lista estática à lista viva</div>
+    <h1>Vamos construir<br>um app de tarefas</h1>
+    <p class="lead" style="margin-top:3vh">Um lugar para anotar o que fazer, marcar o que já foi feito — e que <strong>lembra de tudo</strong> quando você fecha e abre de novo.</p>
+    <div style="margin-top:4vh;display:flex;gap:12px;flex-wrap:wrap">
+      <span class="badge">estado</span><span class="badge">estilo condicional</span><span class="badge">localStorage</span>
+    </div>
+  </section>
+
+  <section class="slide">
+    <div class="chrome"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="path">o que já sabemos</span></div>
+    <h2><span class="num">01</span>Vocês já fizeram metade disso</h2>
+    <div class="cols">
+      <div class="stack">
+        <p>No cadastro de funcionários vocês aprenderam a <strong>ler um formulário</strong>, <strong>validar</strong> e <strong>criar itens numa lista</strong>.</p>
+        <p>O app de tarefas usa exatamente essa base. A novidade é que agora cada item <strong>muda ao longo do tempo</strong> — e isso pede uma forma nova de pensar o código.</p>
+      </div>
+      <ul class="clean">
+        <li><span class="m">✓</span> <div>formulário + validação</div></li>
+        <li><span class="m">✓</span> <div>inserir na lista</div></li>
+        <li><span class="m">✓</span> <div>botão de remover</div></li>
+        <li><span class="m">+</span> <div><strong>novo:</strong> estado, cor e memória</div></li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="slide">
+    <div class="chrome"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="path">a ideia</span></div>
+    <h2><span class="num">02</span>Como o app vai funcionar</h2>
+    <div class="cols">
+      <div class="mock">
+        <div class="mrow"><input value="Estudar JavaScript" readonly><button class="addb">Adicionar</button></div>
+        <ul>
+          <li class="pend"><span class="txt">Estudar JavaScript</span><span class="st">pendente</span><span class="acts"><button>✓</button><button>✕</button><button>🗑</button></span></li>
+          <li class="done"><span class="txt">Ler o material da aula</span><span class="st">completo</span><span class="acts"><button>✓</button><button>✕</button><button>🗑</button></span></li>
+          <li class="canc"><span class="txt">Reunião cancelada</span><span class="st">cancelado</span><span class="acts"><button>✓</button><button>✕</button><button>🗑</button></span></li>
+        </ul>
+      </div>
+      <ul class="clean">
+        <li><span class="m">digitar</span> <div>escrevo a tarefa e adiciono</div></li>
+        <li><span class="m">cor</span> <div>cada estado tem sua cor na borda</div></li>
+        <li><span class="m">✓ ✕</span> <div>marco como completa ou cancelada</div></li>
+        <li><span class="m">🗑</span> <div>removo o que não quero mais</div></li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="slide">
+    <div class="chrome"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="path">os três desafios</span></div>
+    <h2><span class="num">03</span>O que vamos aprender de novo</h2>
+    <div class="cards">
+      <div class="card"><div class="ic">🎨</div><h3>Estilo condicional</h3><p>A aparência muda conforme o estado: pendente, completo ou cancelado ganham cores diferentes.</p></div>
+      <div class="card"><div class="ic">🔄</div><h3>Mudar de estado</h3><p>Botões que trocam a situação da tarefa e a lista se redesenha para refletir a mudança.</p></div>
+      <div class="card"><div class="ic">💾</div><h3>Memória (localStorage)</h3><p>O navegador guarda as tarefas. Feche a aba, volte depois: tudo continua lá.</p></div>
+    </div>
+  </section>
+
+  <section class="slide">
+    <div class="chrome"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="path">a virada de chave</span></div>
+    <h2><span class="num">04</span>Uma ideia central: a lista é um dado</h2>
+    <div class="cols">
+      <div class="stack">
+        <p>Antes, criávamos o <code class="inl">&lt;li&gt;</code> direto na tela. Agora vamos manter as tarefas num <strong>array</strong> — a "fonte da verdade".</p>
+        <p>Sempre que algo muda (nova tarefa, novo estado, remoção), mexemos no array e <strong>redesenhamos a lista inteira</strong> a partir dele.</p>
+        <div class="note"><b>Por que assim?</b> Se a lista sempre reflete o array, salvar no localStorage vira só guardar esse array. A memória fica fácil.</div>
+      </div>
+      <div class="flow" style="flex-direction:column;align-items:stretch">
+        <div class="step">o usuário faz algo</div>
+        <div class="arrow" style="align-self:center">↓</div>
+        <div class="step">muda o <b>array</b> de tarefas</div>
+        <div class="arrow" style="align-self:center">↓</div>
+        <div class="step">redesenha a lista + <b>salva</b></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide">
+    <div class="chrome"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="path">roteiro</span></div>
+    <h2><span class="num">05</span>Por onde vamos passar</h2>
+    <ul class="clean" style="max-width:70ch">
+      <li><span class="m">1</span> <div>Formulário simples + <strong>array</strong> de tarefas</div></li>
+      <li><span class="m">2</span> <div>Função que <strong>desenha a lista</strong> a partir do array</div></li>
+      <li><span class="m">3</span> <div><strong>Cor por estado</strong> — estilização condicional</div></li>
+      <li><span class="m">4</span> <div>Botões de <strong>completar, cancelar e remover</strong></div></li>
+      <li><span class="m">5</span> <div><strong>localStorage</strong> — salvar e carregar</div></li>
+    </ul>
+    <p style="margin-top:3vh">Mesmo ciclo de sempre — <strong>evento → mudar dado → atualizar tela</strong> — agora com um dado que sobrevive ao recarregar.</p>
+  </section>
+
+  <section class="slide center">
+    <div class="chrome"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="path">~/oficina-2/<b>bora</b></span></div>
+    <div class="kicker">mãos ao teclado</div>
+    <h1>Bora construir.</h1>
+    <p class="lead" style="margin-top:3vh">Formulário → array → desenhar → estado → memória.</p>
+  </section>
+
+</div>
+
+<div class="footer">
+  <span>Briefing · App de Tarefas</span>
+  <span><span class="count" id="cur">1</span> / <span id="total">7</span></span>
+</div>
+<div class="hint">&lt;- -&gt; ou espaço</div>
+
+<script>
+  const slides=Array.from(document.querySelectorAll('.slide'));
+  const progress=document.getElementById('progress');
+  const cur=document.getElementById('cur');
+  document.getElementById('total').textContent=slides.length;
+  let i=0;
+  function show(n){
+    i=Math.max(0,Math.min(slides.length-1,n));
+    slides.forEach((s,k)=>s.classList.toggle('active',k===i));
+    progress.style.width=((i+1)/slides.length*100)+'%';
+    cur.textContent=i+1; slides[i].scrollTop=0;
+  }
+  document.addEventListener('keydown',(e)=>{
+    if(e.key==='ArrowRight'||e.key===' '||e.key==='PageDown'){e.preventDefault();show(i+1);}
+    if(e.key==='ArrowLeft'||e.key==='PageUp'){e.preventDefault();show(i-1);}
+    if(e.key==='Home')show(0); if(e.key==='End')show(slides.length-1);
+  });
+  let tx=0;
+  document.addEventListener('touchstart',e=>tx=e.changedTouches[0].clientX,{passive:true});
+  document.addEventListener('touchend',e=>{const dx=e.changedTouches[0].clientX-tx;if(Math.abs(dx)>50)show(dx<0?i+1:i-1);},{passive:true});
+  show(0);
+</script>
+</body>
+</html>

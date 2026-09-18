@@ -1,0 +1,22 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Gerenciador de Tarefas</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+
+  <body>
+    <form id="form-cadastro" onsubmit="cadastrarTarefa(event)">
+      <input placeholder="Título da Tarefa" id="titulo" />
+      <button type="submit">Adicionar</button>
+    </form>
+
+    <!-- Container onde a lista vai aparecer -->
+    <ul
+      id="lista-tarefas-ui"
+      style="margin-top: 20px; list-style: none; padding: 0"
+    ></ul>
+
+    <script src="script.js"></script>
+  </body>
+</html>
