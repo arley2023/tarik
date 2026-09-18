@@ -1,21 +1,71 @@
 <!doctype html>
-<html>
+<html lang="pt-BR">
   <head>
-    <title>Gerenciador de Tarefas</title>
-    <link rel="stylesheet" href="styles.css" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MEU RH</title>
+    <link rel="stylesheet" href="style.css" />
   </head>
 
   <body>
-    <form id="form-cadastro" onsubmit="cadastrarTarefa(event)">
-      <input placeholder="Título da Tarefa" id="titulo" />
-      <button type="submit">Adicionar</button>
-    </form>
+    <div class="container">
+      <h1>MEU RH - Cadastro de Funcionários</h1>
 
-    <!-- Container onde a lista vai aparecer -->
-    <ul
-      id="lista-tarefas-ui"
-      style="margin-top: 20px; list-style: none; padding: 0"
-    ></ul>
+      <form id="form-cadastro" class="form-padrao">
+        <div class="input-texto">
+          <label for="nome">Nome: </label>
+          <input id="nome" placeholder="Digite o nome" />
+        </div>
+
+        <div class="input-texto">
+          <label for="cargo">Cargo: </label>
+          <select id="cargo">
+            <option value="" disabled selected>Selecione o cargo</option>
+            <option value="Gerente">Gerente</option>
+            <option value="Operário">Operário</option>
+            <option value="Estagiário">Estagiário</option>
+            <option value="Servente">Servente</option>
+            <option value="Diretor">Diretor</option>
+          </select>
+        </div>
+
+        <div class="input-texto">
+          <label>Setor:</label>
+          <div class="grupo-radios">
+            <div>
+              <input type="radio" id="admin" name="setor" value="Administração" />
+              <label for="admin">Administração</label>
+            </div>
+            <div>
+              <input type="radio" id="vendas" name="setor" value="Vendas" />
+              <label for="vendas">Vendas</label>
+            </div>
+            <div>
+              <input type="radio" id="compras" name="setor" value="Compras" />
+              <label for="compras">Compras</label>
+            </div>
+            <div>
+              <input type="radio" id="estoque" name="setor" value="Estoque" />
+              <label for="estoque">Estoque</label>
+            </div>
+            <div>
+              <input type="radio" id="despacho" name="setor" value="Despacho" />
+              <label for="despacho">Despacho</label>
+            </div>
+          </div>
+        </div>
+
+        <div class="input-texto">
+          <label for="admissao">Admissão: </label>
+          <input id="admissao" type="date" />
+        </div>
+
+        <button type="submit">CADASTRAR</button>
+      </form>
+
+      <h2>Lista do RH</h2>
+      <ul id="lista-funcionarios"></ul>
+    </div>
 
     <script src="script.js"></script>
   </body>

@@ -1,21 +1,115 @@
-#form-cadastro {
-    /* height: 500px; */
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 10px;
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+}
+
+body {
+  background-color: #f4f6f9;
+  color: #333;
+  padding: 20px;
+}
+
+.container {
+  max-width: 600px;
+  margin: 0 auto;
+  background: #ffffff;
+  padding: 25px;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+h1, h2 {
+  margin-bottom: 20px;
+  color: #0056b3;
+  text-align: center;
+}
+
+.form-padrao {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-bottom: 30px;
 }
 
 .input-texto {
-    display: flex;
-    flex-direction: row;
-    gap: 5px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
 }
-.input-texto > label {
-    color: rgba(0, 0, 0, 0.787);
-}   
 
-.h1 {
-    align-items: center;
-    color: rgba(0, 0, 0, 0.787);
+.input-texto label {
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.input-texto input[type="text"],
+.input-texto input[type="date"],
+.input-texto select {
+  padding: 10px;
+  border:: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+}
+
+.grupo-radios {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  margin-top: 5px;
+}
+
+.grupo-radios div {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+button[type="submit"] {
+  background-color: #0056b3;
+  color: white;
+  padding: 12px;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+button[type="submit"]:hover {
+  background-color: #004095;
+}
+
+#lista-funcionarios {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+#lista-funcionarios li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px;
+  background: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+#lista-funcionarios li button {
+  background-color: #d9534f;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+#lista-funcionarios li button:hover {
+  background-color: #c9302c;
 }
