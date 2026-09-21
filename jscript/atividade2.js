@@ -11,9 +11,16 @@ console.log("Carga Horária: " + cargaHoraria + " horas", " - ", typeof(cargaHor
 console.log("Vagas Restantes: " + vagasRestantes, " - ", typeof(vagasRestantes));
 console.log("Turma Aberta: " + turmaAberta, " - ", typeof(turmaAberta));    
 
+console.table({
+    "Nome do Curso": nomeCurso,
+    "Carga Horária": cargaHoraria + " horas",
+    "Vagas Restantes": vagasRestantes,
+    "Turma Aberta": turmaAberta
+});
 
-
-
+console.log(`Nome do Curso: ${nomeCurso} - Carga Horária: ${cargaHoraria} horas - Vagas Restantes: ${vagasRestantes} - Turma Aberta: ${turmaAberta}`);
+console.log();
+console.log(`Nome do Curso: ${nomeCurso} - Carga Horária: ${cargaHoraria + 100} horas - Vagas Restantes: ${vagasRestantes-5} - Turma Aberta: ${turmaAberta}`);
 
 
 // const nomeCurso = "tecnico informática";
