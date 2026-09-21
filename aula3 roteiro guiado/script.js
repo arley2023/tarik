@@ -85,6 +85,11 @@ function atualizarTela() {
     });
 }
 
+
+
+
+
+
 // // DAQUI SOMENTE A LSITA SEM ORDEM ALFABITICA
 
 
