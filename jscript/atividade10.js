@@ -63,8 +63,9 @@ console.log();
 console.log('='.repeat(70));
 console.log('| Pedido de Hamburguer - Tamanho e Extras'.padEnd(69) + '|');
 console.log('='.repeat(70));
-console.log();
-console.log('|  ' + tamanho.padEnd(16) + ' | ' + adicionais[0].padStart(15) + adicionais[1].padStart(15) + adicionais[2].padStart(15)  + '  |');
-console.log();
+console.log('|'.padEnd(20) + '|'.padEnd(49) + '|');
+// console.log('|  tamanho: ' + tamanho.padEnd(7) + ' | ' + adicionais[0].toString().padStart(15) + adicionais[1].toString().padStart(15) + adicionais[2].toString().padStart(15)  + '  |');
+console.log('|  tamanho: ' + tamanho.padEnd(20) + ' | ' + adicionais.toString().padStart(45)  + '  |');
+console.log('|'.padEnd(20) + '|'.padEnd(49) + '|');
 console.log('='.repeat(70));
 
