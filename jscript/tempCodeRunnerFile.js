@@ -1,3 +1,3 @@
-
-// console.log(altura.toFixed(42).toLocaleString("pt-BR", { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
-// console.log("altura -> " + typeof altura);
+log(`│ Cliente ${cliente.toString().padEnd(34)} │`);
+console.log(`│ Produto ${produto.padEnd(34)} │`);
+console.log(`│ Quantidade ${quantidade.padEnd(34)} │`);
