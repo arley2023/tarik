@@ -263,8 +263,8 @@ import { input, number, password, confirm, select, checkbox } from '@inquirer/pr
 // -------------------------------------------------------------------------------
 
 // Exercício 8 — Empréstimo de livros na Biblioteca Comunitária
-// Um leitor pode pegar um livro emprestado se
-// não tiver livros atrasados e tiver menos de 3 livros em mãos. Leitores com cadastro de professor podem ter até 5 livros.
+// Um leitor pode pegar um livro emprestado se não tiver livros atrasados
+// e tiver menos de 3 livros em mãos. Leitores com cadastro de professor podem ter até 5 livros.
 // Entrada:
 // tem atraso (
 // true
@@ -287,41 +287,51 @@ import { input, number, password, confirm, select, checkbox } from '@inquirer/pr
 console.log();
 console.log("Empréstimo de livros na Biblioteca Comunitária");
 
-const livros = await number({
-  message: "Quantidade de livros em mãos: ",
-  nin: 0;
-  max: 3
-});
-
 const atraso = await confirm({
   message: "Tem livros atrasados? [y/N] -> ",
   default: false,
 });
 
+const livros = await number({
+  message: "Quantidade de livros em mãos: ",
+  nin: 0;
+  max: 5
+});
+
 const professor = await confirm({
-  message: "Tem livros atrasados? [y/N] -> ",
+  message: "É professor? [y/N] -> ",
   default: false,
 });
 
-if (professor === false && atraso === false && livros <= 3) {
-    console.log(`Você nao tem plano fidelidade,`);
-    console.log(`Você tem ${idade} anos, mais de 60 e ganhou um desconto de R$ ${(valor * 0.05).toFixed(2)} na compra`);
-    console.log(`O valor de sua compra ficou emR$ ${valor - (valor * 0.05).toFixed(2)}`);
+if (atraso === true) { 
+    console.log("Você nao pode pegar livros!")
 } else 
-    if (fidelidade === false && idade >= 60 && valor < 100) {
+    if (professor === false) {
+    
+    
+    
+        if (livros === 3 || atraso === true) {
+
+    } 
+
+
+
+if (fidelidade === false && idade >= 60 && valor < 100) {
         console.log(`Você nao tem plano fidelidade,`);
         console.log(`O valor de sua compra R$ ${valor.toFixed(2)}`);
     } else 
         if (fidelidade === true && idade >= 60 && valor > 100) {
-            console.log(`Você tem plano fidelidade, e ganhou R$ ${valor * 0.1} que é de 10% de deconto`);
-            console.log(`Você tem ${idade} anos, mais de 60 e ganhou mais um desconto de R$ ${(valor * 0.05).toFixed(2)} na compra`);
             console.log(`O valor de sua compra ficou em R$ ${valor - (valor * 0.05) - (valor * 0.1).toFixed(2)}`);
-        } else
-            if (fidelidade === true && idade >= 60 && valor < 100) {
-                console.log(`Você tem plano fidelidade, e ganhou R$ ${valor * 0.1} que é de 10% de deconto`);
-                console.log(`Você o valor de sua compra ficou abaixo dos R$ 100,00, sem desconto por idde`);
-                console.log(`O valor de sua compra ficou em R$ ${valor - (valor * 0.1).toFixed(2)}`);
             } else
+                if (fidelidade === true && idade >= 60 && valor < 100) {
+                    console.log(`O valor de sua compra ficou em R$ ${valor - (valor * 0.1).toFixed(2)}`);
+                };
+        if (fidelidade === true && idade >= 60 && valor > 100) {
+                console.log(`O valor de sua compra ficou em R$ ${valor - (valor * 0.05) - (valor * 0.1).toFixed(2)}`);
+            } else
+                if (fidelidade === true && idade >= 60 && valor < 100) {
+                    console.log(`O valor de sua compra ficou em R$ ${valor - (valor * 0.1).toFixed(2)}`);
+            };
 
 
 
@@ -339,59 +349,4 @@ if (professor === false && atraso === false && livros <= 3) {
 // pesquise
 // Math.ceil()
 // para arredondar a hora adicional.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// -------------------------------------------------------------------------------
-
-
-// if(preco > 100){
-//     console.log(`foi aplicado um desconto de 15% R$ ${preco*0.15.toFixed(2)}`);
-//     console.log(`valor final R$ ${preco*[1-0.15.toFixed(2)]}`)
-// }else{
-//     console.log(`foi aplicado um desconto de 5% R$ ${preco*0.05.toFixed(2)}`);
-//     console.log(`valor final R$ ${preco*[1-0.05.toFixed(2)]}`)
-// };
-
-
-
-// receber velocidade capturada
-// se velocidade for > 120km aplica multa de 0.25 para cada km ultrapassado
-// se velocidade for > 80km aplica multa de 0.15 para cada km ultrapassado
-// se velocidade for > 60km aplica multa de 0.05 para cada km ultrapassado
-// se velocidade for <= 60km náo aplica multa
-
-
-
-// console.log();
-
-// const velocidade = await number({
-//   message: "Velocidade Km/h: "
-// });
-
-// if(velocidade > 120){
-//     console.log(`Sua Velocidade ultrapassou 120Km/h e você sera multado em ${(velocidade-120)*0.25.toFixed(2)}`)
-// }else if(velocidade > 80){
-//     console.log(`Sua Velocidade ultrapassou 80Km/h e você sera multado em ${(velocidade-80)*0.15.toFixed(2)}`)
-// }else if(velocidade > 60){
-//     console.log(`Sua Velocidade ultrapassou 60Km/h e você sera multado em ${(velocidade-60)*0.05.toFixed(2)}`)
-// }else if(velocidade <= 60){
-//     console.log(`Voê nao foi multado`)
-//     }
-
 
