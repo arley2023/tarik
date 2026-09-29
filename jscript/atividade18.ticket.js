@@ -36,10 +36,6 @@ const parcelas = await select({
 
 
 
-// const preco =
-//   produto = 'fone de ouvido' && (idade >= 18 || acompanhado) ? "Entrada liberada!" : "Vazaaa!!";
-
-
 // / TODO: produto, quantidade, cupom (confirm) e parcelas (select)
 // / TODO: subtotal, desconto (ternário), total e valor da parcela
 // / TODO: imprimir o recibo com padEnd, padStart e toLocaleString('pt-BR', brl)
@@ -69,7 +65,7 @@ console.log();
 console.log('┌──────────────────────────────────────────────────┐');
 console.log('│                RECIBO DE COMPRA                  │');
 console.log('├──────────────────────────────────────────────────┤');
-console.log(`│ Cliente ${cliente.toString().padEnd(4)} │`);
+console.log(`│ Cliente ${cliente.toString().padEnd(34 - length(cliente))} │`);
 
 console.log("Preço".padEnd(15) + preco.toLocaleString("pt-BR", brl).padStart(20));
 
