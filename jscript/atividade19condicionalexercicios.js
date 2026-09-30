@@ -284,54 +284,26 @@ import { input, number, password, confirm, select, checkbox } from '@inquirer/pr
 
 
 
-console.log();
-console.log("Empréstimo de livros na Biblioteca Comunitária");
-
 const atraso = await confirm({
-  message: "Tem livros atrasados? [y/N] -> ",
-  default: false,
-});
+  message: "Possui livros em atraso [SIM] ou [NÃO]:", 
+  default: false})
 
-const livros = await number({
-  message: "Quantidade de livros em mãos: ",
-  nin: 0;
-  max: 5
-});
+const qtd_livros = await number({
+  message: "Quantidade de Livros:",
+  min: 0
+})
 
-const professor = await confirm({
-  message: "É professor? [y/N] -> ",
-  default: false,
-});
+const ehProfessor = await confirm({
+  message: "Professor [SIM] ou [NÃO]:", 
+  default: false})
 
-if (atraso === true) { 
-    console.log("Você nao pode pegar livros!")
-} else 
-    if (professor === false) {
-    
-    
-    
-        if (livros === 3 || atraso === true) {
-
-    } 
-
-
-
-if (fidelidade === false && idade >= 60 && valor < 100) {
-        console.log(`Você nao tem plano fidelidade,`);
-        console.log(`O valor de sua compra R$ ${valor.toFixed(2)}`);
-    } else 
-        if (fidelidade === true && idade >= 60 && valor > 100) {
-            console.log(`O valor de sua compra ficou em R$ ${valor - (valor * 0.05) - (valor * 0.1).toFixed(2)}`);
-            } else
-                if (fidelidade === true && idade >= 60 && valor < 100) {
-                    console.log(`O valor de sua compra ficou em R$ ${valor - (valor * 0.1).toFixed(2)}`);
-                };
-        if (fidelidade === true && idade >= 60 && valor > 100) {
-                console.log(`O valor de sua compra ficou em R$ ${valor - (valor * 0.05) - (valor * 0.1).toFixed(2)}`);
-            } else
-                if (fidelidade === true && idade >= 60 && valor < 100) {
-                    console.log(`O valor de sua compra ficou em R$ ${valor - (valor * 0.1).toFixed(2)}`);
-            };
+if(!atraso && qtd_livros <= 3){
+  console.log('Empréstimo Concedido!')
+}else if(!atraso && qtd_livros <= 5 && ehProfessor){
+  console.log('Empréstimo Concedido!')
+}else{
+  console.log('Empréstimo Recusado!')
+}
 
 
 
@@ -350,3 +322,14 @@ if (fidelidade === false && idade >= 60 && valor < 100) {
 // Math.ceil()
 // para arredondar a hora adicional.
 
+
+const minutos = await number({message: 'Tempo em minutos: '})
+
+if(minutos <= 15){
+  console.log('Estacionamento grátis!')
+}else if(minutos <= 180){ //3 horas
+  console.log('Tarifa Estacionamento: R$8,00')
+}else{
+  let total = 8 + (Math.ceil(minutos/60) * 3)
+  console.log(`Tarifa Estacionamento: R$${total.toFixed(2)}`)
+}
