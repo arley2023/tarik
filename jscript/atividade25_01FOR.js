@@ -7,5 +7,7 @@ import { input, number, password, confirm, select, checkbox } from '@inquirer/pr
 let total = 0;
 
 for (let i = 1; i <= 2500; i++) {
-    console.log(`somando ${total = total + i}`)
+    total = total + i
 }
+
+console.log(total)
