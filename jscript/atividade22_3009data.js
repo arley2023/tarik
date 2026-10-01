@@ -1,58 +1,31 @@
 import { input, number, password, confirm, select, checkbox } from "@inquirer/prompts";
 
-console.log();
-console.log("Advinhe o número");
+const nascimento = await input({ message: "Digite sua data de nascimento no padrão internacional 'ano-mes-dia':" })
 
-// let secreto = Math.floor(Math.random() * 10) + 1;
-let secreto = 7;
-let conceito;
-// console.log(secreto);
+const dataNascimento = new Date(nascimento + "T00:00");
 
-const numero = await number({
-  message: "Digite um numero 0 a 10: ",
-  min: 0,
-  max: 10,
-});
+const hoje = new Date();
 
-if (numero == secreto) {
-  conceito = "Você Acertou!";
-} else if (numero > secreto) {
-  conceito = "errou, seu número é maior";
-} else {
-  conceito = "errou, seu número é menor";
+let idade = hoje.getFullYear() - dataNascimento.getFullYear()
+
+if (hoje.getMonth() < dataNascimento.getMonth() || (hoje.getMonth() === dataNascimento.getMonth && hoje.getDate() < dataNascimento.getDate())) {
+    idade -= 1
 }
 
-console.log(conceito);
+let faixaEtaria;
 
-const numero1 = await number({
-  message: "Digite um numero 0 a 50: ",
-  min: 0,
-  max: 50,
-});
-
-if (numero1 == secreto) {
-  conceito = "Você Acertou!";
-} else if (numero1 > secreto) {
-  conceito = "errou, seu número é maior";
+if (idade >= 0 && idade <= 13) {
+    faixaEtaria = "Criança"
+} else if (idade >= 14 && idade <= 19) {
+    faixaEtaria = "Adolescente"
+} else if (idade >= 20 && idade <= 69) {
+    faixaEtaria = "Adulto"
+} else if (idade >= 70) {
+    faixaEtaria = "Sênior"
 } else {
-  conceito = "errou, seu número é menor";
+    faixaEtaria = "Alienigena 👽"
 }
 
-console.log(conceito);
+console.log(`Idade: ${idade} anos -> Faixa Etária: ${faixaEtari
 
-const numero2 = await number({
-  message: "Digite um numero 0 a 50: ",
-  min: 0,
-  max: 50,
-});
-
-if (numero2 == secreto) {
-  conceito = "Você Acertou!";
-} else if (numero2 > secreto) {
-  conceito = "errou, seu número é maior";
-} else {
-  conceito = "errou, seu número é menor";
-}
-
-console.log(conceito);
-console.log(secreto);
+  
