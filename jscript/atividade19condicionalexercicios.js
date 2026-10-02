@@ -146,26 +146,26 @@ import { input, number, password, confirm, select, checkbox } from '@inquirer/pr
 
 
 
-// console.log();
-// console.log("Boletim da Escola de Idiomas Speak Up");
+console.log();
+console.log("Boletim da Escola de Idiomas Speak Up");
 
-// const nota1 = Number(
-//   (await input({ message: "Digite a primeira nota: " }))
-//     .replace(',', '.')
-// );
+const nota1 = Number(
+  (await input({ message: "Digite a primeira nota: " }))
+    .replace(',', '.')
+);
 
-// const nota2 = Number(
-//   (await input({ message: "Digite a segunda nota: " }))
-//     .replace(',', '.')
-// );
+const nota2 = Number(
+  (await input({ message: "Digite a segunda nota: " }))
+    .replace(',', '.')
+);
 
-// const media = (nota1 + nota2) / 2;
+const media = (nota1 + nota2) / 2;
 
-// if (media < 7) {
-//   console.log(`Sua média é de ${media.toFixed(1)} REPROVADO`);
-// } else {
-//   console.log(`Sua média é de ${media.toFixed(1)} APROVADO`);
-// }
+if (media < 7) {
+  console.log(`Sua média é de ${media.toFixed(1)} REPROVADO`);
+} else {
+  console.log(`Sua média é de ${media.toFixed(1)} APROVADO`);
+}
 
 
 
