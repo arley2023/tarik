@@ -1,1 +1,1 @@
-$
+total += valor * quantidade;
