@@ -4,18 +4,26 @@ import { input, number, password, confirm, select, checkbox } from '@inquirer/pr
 // DESAFIO 1: Aplique um desconto de 10 reais para compras com total a partir de 100 reais e um desconto de 15 reais para compras com total a partir de 200 reais
 // DESAFIO 2: Monte a nota fiscal do cliente, contendo os itens que foram comprados, seus preços, o desconto aplicado e o total da compra.
 
+let quantidade = 0;
+let valor = true;
+let totalCompra = 0;
 
 while (true) {
   let opcao = await select({
     message: "Escolha uma opção:",
     choices: [
-      { name: "Opção 1", value: 1 },
-      { name: "Opção 2", value: 2 },
-      { name: "Opção 3", value: 3 },
-      { name: "Opção 4", value: 4 },
+      { name: "Opção 1 - x-salada", value: 1 },
+      { name: "Opção 2 - x-burger", value: 2 },
+      { name: "Opção 3 - x-tudo", value: 3 },
+      { name: "Opção 4 - x-egg", value: 4 },
       { name: "Sair", value: 0 }
+      if (opcao === 0) {
+        break;
     ]
   });
+
+const quantidade = await number({ message: "Digite a quantidade: " });
+
 
   if (opcao === 0) {
     console.log("Saindo do programa.");

@@ -3,19 +3,33 @@ import { input, number, password, confirm, select, checkbox } from '@inquirer/pr
 //2. Usando while(true) faça um programa de coleta de temperaturas. O programa deverá pedir uma temperatura em Celsius, quando o usuário digitar "SAIR", a coleta deverá ser encerrada e a média das temperaturas inseridas deverá ser calculada e exibida no terminal.
 
 
-let soma = 0;
-let qtsoma = 0;
+let mediatemp = 0;
+let somatemp = 0;
+let qttemp = 0;
 
 while (true) {
-  let temp = await number({ message:"Digite a temperatura em celsius (0 para sair): ", step: 0.1 });
+  let temperatura = await input({ message: `Digite a ${qttemp + 1} temperatura em celsius (sair para encerrar): ` });
 
-
-  if (temp === 0) {
-    break;
+  if (temperatura === "sair") {
+    console.log("Encerrando a coleta de temperaturas...");
+    break
   }
 
-  soma += temp;
-  qtsoma++;
+  temperatura = Number(temperatura);
+
+if (isNaN(temperatura)) {
+  console.log("Por favor, digite um número válido ou 'sair' para encerrar.");
+  continue;
 }
 
-console.log(`A média das temperaturas é: ${soma / qtsoma}`);
+if (temperatura >= -50 && temperatura <= 50) {
+  somatemp += temperatura;
+  qttemp++;
+} else {
+  console.log("Por favor, digite uma temperatura entre -50 e 50 graus Celsius.");
+  continue;
+}
+
+}
+
+console.log(`A média das temperaturas é: ${(somatemp / qttemp).toFixed(2)}`);
