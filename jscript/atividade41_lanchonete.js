@@ -4,42 +4,70 @@ import { input, number, password, confirm, select, checkbox } from '@inquirer/pr
 // DESAFIO 1: Aplique um desconto de 10 reais para compras com total a partir de 100 reais e um desconto de 15 reais para compras com total a partir de 200 reais
 // DESAFIO 2: Monte a nota fiscal do cliente, contendo os itens que foram comprados, seus preços, o desconto aplicado e o total da compra.
 
-let quantidade = 0;
-let valor = true;
-let totalCompra = 0;
+let totalVenda = 0;
 
 while (true) {
-  let opcao = await select({
-    message: "Escolha uma opção:",
-    choices: [
-      { name: "Opção 1 - x-salada", value: 1 },
-      { name: "Opção 2 - x-burger", value: 2 },
-      { name: "Opção 3 - x-tudo", value: 3 },
-      { name: "Opção 4 - x-egg", value: 4 },
-      { name: "Sair", value: 0 }
-      if (opcao === 0) {
-        break;
-    ]
-  });
+  console.log(`
+    Seja bem vindo ao Pará Lanches
+    
+    código   | Nome do Lanche      | Preço
+    001      | x-burguer           | R$ 10,00
+    002      | x-salada            | R$ 12,00
+    003      | Bauru               | R$ 15,00
+    004      | Kuririn no Pão Bola | R$ 20,00
+    005      | X-bacon com picolo  | R$ 25,00
+    006      | coca zero 350ml     | R$ 5,00
+    
+    `);
 
-const quantidade = await number({ message: "Digite a quantidade: " });
+let cod = await input({message:"Digite o código do lanche desejado: "})
 
+        let nome = undefined
+        let preco = undefined
 
-  if (opcao === 0) {
-    console.log("Saindo do programa.");
-    break;
-  } else 
-    if (opcao < 1 || opcao > 4) {
-      console.log("Opção inválida. Por favor, escolha uma opção válida.");
+    if (cod === "001") {
+      nome = "x-burguer";
+      preco = 10;
+    } else if (cod === "002") {
+      nome = "x-salada";
+      preco = 12;
+    } else if (cod === "003") {
+      nome = "Bauru";
+      preco = 15;
+    } else if (cod === "004") {
+      nome = "Kuririn no Pão Bola";
+      preco = 20;
+    } else if (cod === "005") {
+      nome = "X-bacon com picolo";
+      preco = 25;
+    } else if (cod === "006") {
+      nome = "coca zero 350ml";
+      preco = 5;
+    } else {
+      console.log("Produto não encontrado.");
       continue;
-    } else 
-      if (opcao === 1) {
-        console.log("Você escolheu a Opção 1.");
-      } else if (opcao === 2) {
-        console.log("Você escolheu a Opção 2.");
-      } else if (opcao === 3) {
-        console.log("Você escolheu a Opção 3.");
-      } else if (opcao === 4) {
-        console.log("Você escolheu a Opção 4.");
-      }
+    }
+
+     console.log(`Você escolheu ${nome} por R$ ${preco.toFixed(2)}`)
+        let quantidade = await number({message:"Digite quantas unidades deseja: "})
+
+        totalVenda += (preco * quantidade)
+
+
+        let continuar = await input({message:"DESEJA COMPRAR OUTRO PRODUTO? (S/N)"})
+
+        if (continuar == "N"){
+            console.log("Venda Finalizada!")
+            break
+        } 
+        
 }
+
+if (totalVenda >= 200) {
+  totalVenda = totalVenda - 15
+} else if (totalVenda >= 100) {
+  totalVenda = totalVenda - 10
+}
+
+console.log(`Total a Pagar: ${totalVenda.toLocaleString("pt-BR", {style:"currency", currency:"BRL"})}`)
+
