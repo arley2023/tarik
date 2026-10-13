@@ -6,100 +6,101 @@ import { input, number, password, confirm, select, checkbox } from '@inquirer/pr
 
 // 1. O programa deverá pedir as seguintes informações de um funcionário: Nome, CPF, Cargo, Departamento, Salário
 
+// 2. Exiba uma ficha contendo as informações do funcionário cadastrado. Ex:
+/*
 
-let nome = "";
-let cpf = "";
-let cargo = "";
-let departamento = "";
-let salario = "";
+--------------------------
+FICHA DO FUNCIONÁRIO:
 
-while(true){
+Nome: {nome}
+Cargo: {cargo}
+...
+--------------------------
+*/
 
-  while(true) {
-    nome = await input({ message: 'Qual o seu nome? ', required: true });
-    if (nome == "") {
-      await input({message:"DIGITE SEU NOME - TECLE ENTER PARA CONTINUAR"});
-      } else {
-        break;
+// 3. Adicione validações para os campos, exiba um mensagem de erro caso alguma das informações fique vazia. Para o campo de salário verifique se o salário é um número positivo acima do salário mínimo (R$ 1621.00), para o campo CPF verifique se o tamanho do CPF é exatamente 11.
+
+// 4. Caso o usuário cometa algum erro no cadastro das informações, mostre um erro e peça para a pessoa tentar novamente
+
+//5. Permita que o usuário cadastre funcionários indefinidamente (while true), ao final de cada cadastro pergunte se o usuário deseja continuar.
+
+//6. Ao final exiba o total da folha de pagamento, a média salarial e quantos funcionários foram cadastrados no total
+
+//7. Ao final do programa exiba uma lista numerada com o nome e cargo de todos os funcionários cadastrados
+
+//8. Adapte o código para exibir um menu de opções onde o usuário pode escolher entre Adicionar um novo funcionário ou ver os funcionários já cadastrados
+
+import { input, number } from "@inquirer/prompts"
+while (true) {
+    let nome
+    let cargo
+    let salario
+    let departamento
+    let cpf
+
+    while (true) {
+        nome = await input({ message: "Digite o nome do funcionário" })
+        if (!nome) {
+            console.error("NOME VAZIO DETECTADO. TENTE NOVAMENTE")
+        } else {
+            break
         }
-  }
-  if(nome === "sair"){
-    break;
     }
-  while(true) {
-    cpf = await input({ message: 'Digite seu CPF ? ' });
-      if (cpf === "" || cpf.length != 11) {
-      await input({message:"DIGITE UM CPF VÁLIDO - TECLE ENTER PARA CONTINUAR"});
-      } else {
-        break;
-      }
+
+    while (true) {
+        cpf = await input({ message: "Digite o cpf do funcionário" })
+
+        if (cpf.length !== 11) {
+            console.error("CPF COM TAMANHO INADEQUADO DETECTADO. CPF PRECISA CONTER 11 DIGITOS.")
+        }
+        else {
+            break
+        }
+
     }
-  while(true) {
-    cargo = await input({ message: 'Digite seu cargo ? ' });
-      if (cargo === "") {
-      await input({message:"DIGITE O SEU CARGO - TECLE ENTER PARA CONTINUAR"});
-      } else {
-        break;
-      }
+
+    while (true) {
+        cargo = await input({ message: "Digite o cargo do funcionário" })
+
+        if (!cargo) {
+            console.error("CARGO VAZIO DETECTADO. TENTE NOVAMENTE")
+        } else {
+            break
+        }
     }
-  while(true) {
-    departamento = await input({ message: 'Digite seu departamento ? ' });
-      if (departamento === "") {
-      await input({message:"DIGITE O SEU DEPARTAMENTO - TECLE ENTER PARA CONTINUAR"});
-      } else {
-        break;
-      }
+
+    while (true) {
+        departamento = await input({ message: "Digite o departamento do funcionário" })
+
+        if (!departamento) {
+            console.error("DEPARTAMENTO VAZIO DETECTADO. TENTE NOVAMENTE")
+        } else {
+            break
+        }
     }
-  while(true) {
-    salario = await input({ message: 'Digite seu salario ? ' });
-      if (salario.trim() === "" || isNaN(Number(salario))) {
-      await input({message:"DIGITE O SEU SALÁRIO - TECLE ENTER PARA CONTINUAR"});
-      } else {
-        break;
-      }
+
+    while (true) {
+        salario = await number({ message: "Digite o salário do funcionário", step: 0.01 })
+        if (salario < 1621) {
+            console.error("VALOR DE SALÁRIO DIGITADO É INVÁLIDO. SALÁRIO MÍNIMO É R$ 1.621,00")
+        } else {
+            break
+        }
+
     }
-  }
 
+    console.log(`
+FICHA DO FUNCIONÁRIO:
 
+Nome: ${nome}
 
+CPF: ${cpf.slice(0, 3)}.${cpf.slice(3, 6)}.${cpf.slice(6, 9)}-${cpf.slice(9, 11)}
 
+Cargo: ${cargo}
 
-//       let nome = "";
+Departamento: ${departamento}
 
-// while(true){
-//   if(nome === "sair")
-//   break;
-//   while(true) {
-//     let nome = await input({ message: 'Qual o seu nome? ' });
-//     if (nome == "" || nome == "sair") {
-//       await input({message:"DIGITE SEU NOME - TECLE ENTER PARA CONTINUAR"})
-//       break;
-//     } else {
-//       while(true) {
-//         let cpf = await input({ message: 'Digite seu CPF ? ' });
-//         if (cpf === "" || cpf.length() != 11); {
-//          await input({message:"DIGITE UM CPF VÁLIDO - TECLE ENTER PARA CONTINUAR"});
-//         } else {
-//           while(true) {
-//             let cargo = await input({ message: 'Qual o seu cargo? ' });
-//             if (cargo == "") {  
-//               await input({message:"DIGITE SEU CARGO - TECLE ENTER PARA CONTINUAR"});
-//             } else {
-//               while(true) {
-//                 let departamento = await input({ message: 'Qual o seu departamento? ' });
-//                 if (separtamento == "") {  
-//                   await input({message:"DIGITE O DEPARTAMENTO - TECLE ENTER PARA CONTINUAR"});
-//               } else {
-//                 while(true) {
-//                 let salario = await input({ message: 'Qual o seu salario? ' });
-//                 if (salario.trim() === "" || isNaN(Number(salario)))
-//                   await input({message:"DIGITE O SALÁRIO - TECLE ENTER PARA CONTINUAR"});
-//                   }
-//                 }
-//               }
-//             }
-//           }
-//         }
-//       }   }}}
-
-
+Salário: ${salario.toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}
+    
+`)
+}
