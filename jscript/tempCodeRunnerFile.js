@@ -1,1 +1,2 @@
-total += valor * quantidade;
+
+      }
