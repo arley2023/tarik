@@ -30,7 +30,13 @@ Cargo: {cargo}
 
 //8. Adapte o código para exibir um menu de opções onde o usuário pode escolher entre Adicionar um novo funcionário ou ver os funcionários já cadastrados
 
-import { input, number } from "@inquirer/prompts"
+
+const listanome = [];
+const listacpf = [];
+const listacargo = [];
+const listadepartameto = [];
+const listasalario = [];
+
 while (true) {
     let nome
     let cargo
@@ -89,18 +95,38 @@ while (true) {
 
     }
 
-    console.log(`
-FICHA DO FUNCIONÁRIO:
-
-Nome: ${nome}
-
-CPF: ${cpf.slice(0, 3)}.${cpf.slice(3, 6)}.${cpf.slice(6, 9)}-${cpf.slice(9, 11)}
-
-Cargo: ${cargo}
-
-Departamento: ${departamento}
-
-Salário: ${salario.toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}
+        listanome.push(nome);
+        listacpf.push(cpf);
+        listacargo.push(cargo);
+        listadepartameto.push(departamento);
+        listasalario.push(salario);
     
-`)
+    let continuar
+    
+    while(true) {
+        continuar = await input({message: "Deseja continuar entrada de dados s/n", required: (true) });
+        if (continuar == "s" || continuar == "n")
+            break;
+    }
+
+
+    if (continuar !== "s") {
+        break
+    }
 }
+
+console.log('┌──────────────────────────────────────────────────────────────────────────────────────────────────────┐');
+console.log(`│ Relação de Funcioánarios                                                                             │`);
+console.log('├──────┬────────────────┬────────────────┬──────────────────┬────────────────┬─────────────────────────┤');
+console.log(`│  ID  │  Nome          │  CPF           │  DEPARTAMENTO    │ CARGO          │  SALÁRIO                │`);
+console.log('├──────┼────────────────┼────────────────┼──────────────────┼────────────────┼─────────────────────────┤');
+
+
+for (let i = 0; i < listanome.length; i++) {
+  console.log(`| ${(i+1).toFixed(0).padEnd(5)}│ ${listanome[i].padEnd(15)}│ ${listacpf[i]} │ ${listadepartameto[i].padEnd()}│ ${listacargo[i]}│ ${listasalario[i].toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}   │`);
+}
+
+console.log('├──────┴────────────────┴─────┬──────────┴─────────┬────────┴────────────────┴────┬────────────────────┤');
+console.log(`│  TOTAL SALARIOS             │                    │  MÉDIA SALRIAL               │                    │`);
+console.log('└─────────────────────────────┴────────────────────┴──────────────────────────────┴────────────────────┘');
+console.log();
