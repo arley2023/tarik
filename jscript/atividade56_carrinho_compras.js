@@ -2,6 +2,7 @@ import { input, number } from "@inquirer/prompts";
 
 let lista = [];
 let total = 0;
+let qtdprod = 0;
 
 while (true) { console.log(`CARRINHO
 
@@ -27,7 +28,7 @@ while (true) { console.log(`CARRINHO
 
         let preco;
         while (true) {
-            preco = await number({message: "Digite o preço do produto: ", step?=1});
+            preco = await number({message: "Digite o preço do produto: ", step: 0.1});
             if (preco <= 0) {
                 console.warn("PREÇO DEVE SER PREENCHIDO! TENTE NOVAMENTE");
                 continue;
@@ -46,7 +47,9 @@ while (true) { console.log(`CARRINHO
         }
         termo[produto] = descricao;
         total += (quantidade*preco)
+        qtdprod++
         console.log("NOVO TERMO CADASTRADO!");
+        console.log(lista);
     
 
 
