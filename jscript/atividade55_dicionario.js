@@ -9,6 +9,7 @@ while (true) { console.log(`GLOSSÁRIO
     3. LISTAR TODOS
     4. REMOVER
     0. SAIR
+    
     `);
 
     let op = await input({message: "DIGITE O NÚMERO DA OPÇÃO DESEJADA: "});

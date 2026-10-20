@@ -1,14 +1,13 @@
-import { input } from "@inquirer/prompts";
+import { input, number } from "@inquirer/prompts";
 
-let termo = {};
+let lista = [];
+let total = 0;
 
-while (true) { console.log(`GLOSSÁRIO
+while (true) { console.log(`CARRINHO
 
-    1. CADASTRAR TERMO
-    2. BUSCAR TERMO
-    3. LISTAR TODOS
-    4. REMOVER
-    0. SAIR
+    1. ADICIONAR PRODUTO
+    2. VER CARRINHO
+    0. FINALZIA COMPRA
     `);
 
     let op = await input({message: "DIGITE O NÚMERO DA OPÇÃO DESEJADA: "});
@@ -16,65 +15,82 @@ while (true) { console.log(`GLOSSÁRIO
     if (op === "1") {
         console.log("CADASTRAR TERMO");
 
-        let nome;
+        let produto;
         while (true) {
-            nome = await input({message: "Digite o nome do termo: "});
-            if (!nome.trim()) {
-                console.warn("TERMO DEVE SER PREENCHIDO! TENTE NOVAMENTE");
+            produto = await input({message: "Digite o nome do produto: "});
+            if (!produto.trim()) {
+                console.warn("PRODUTO DEVE SER PREENCHIDO! TENTE NOVAMENTE");
                 continue;
             }
             break;
         }
 
-        let descricao;
+        let preco;
         while (true) {
-            descricao = await input({message: "Digite a descrição do termo: "});
-            if (!descricao.trim()) {
-                console.warn("DESCRIÇÃO DEVE SER PREENCHIDA! TENTE NOVAMENTE");
+            preco = await number({message: "Digite o preço do produto: ", step?=1});
+            if (preco <= 0) {
+                console.warn("PREÇO DEVE SER PREENCHIDO! TENTE NOVAMENTE");
                 continue;
             }
             break;
         }
 
-        termo[nome] = descricao;
+        let quantidade;
+        while (true) {
+            quantidade = await number({message: "Digite a quantidade: ", min: 1, required: true});
+            if (preco <= 0) {
+                console.warn("A QUANTIDADE DEVE SER PREENCHIDA! TENTE NOVAMENTE");
+                continue;
+            }
+            break;
+        }
+        termo[produto] = descricao;
+        total += (quantidade*preco)
         console.log("NOVO TERMO CADASTRADO!");
+    
+
+
 
     } else if (op === "2") {
-        console.log("BUSCAR TERMO");
-        let buscatermo = await input({message: "Digite o termo que deseja buscar: "});
+        console.log("BUSCAR PRODUTO");
+        let buscaproduto = await input({message: "Digite o produto que deseja buscar: "});
 
-         if (termo[buscatermo] !== undefined) {
-            console.log(`TERMO: ${buscatermo}`);
-            console.log(`DESCRIÇÃO: ${termo[buscatermo]}`);
+         if (termo[buscaproduto] !== undefined) {
+            console.log(`TERMO: ${buscaproduto}`);
+            console.log(`DESCRIÇÃO: ${termo[buscaproduto]}`);
         } else {
-            console.warn("TERMO NÃO ENCONTRADO!");
+            console.warn("PRODUTO NÃO ENCONTRADO!");
         }
+
+
+
+
 
     } else if (op === "3") {
         console.log("LISTA DE TODOS OS TERMOS:");
 
-        let nomes = Object.keys(termo);
+        let produtos = Object.keys(termo);
 
-        if (nomes.length === 0) {
+        if (produtos.length === 0) {
             console.log("NENHUM TERMO CADASTRADO!");
         } else {
-            for (let i = 0; i < nomes.length; i++) {
-                console.log(`${i + 1}. ${nomes[i]}`);
-                console.log(`   Descrição: ${termo[nomes[i]]}`);
+            for (let i = 0; i < produtos.length; i++) {
+                console.log(`${i + 1}. ${produtos[i]}`);
+                console.log(`   Descrição: ${termo[produtos[i]]}`);
             }
         }
 
-    } else if (op === "4") {
-        console.log("BUSCAR TERMO");
-        let buscatermo = await input({message: "Digite o termo que deseja buscar: "});
+    // } else if (op === "4") {
+    //     console.log("BUSCAR TERMO");
+    //     let buscatermo = await input({message: "Digite o termo que deseja buscar: "});
 
-        if (termo[buscatermo] !== undefined) {
-            console.log(`TERMO: ${buscatermo}`);
-            console.log(`DESCRIÇÃO: ${termo[buscatermo]}`);
-            delete termo[buscatermo]
-        } else {
-            console.warn("TERMO NÃO ENCONTRADO!");
-        }
+    //     if (termo[buscatermo] !== undefined) {
+    //         console.log(`TERMO: ${buscatermo}`);
+    //         console.log(`DESCRIÇÃO: ${termo[buscatermo]}`);
+    //         delete termo[buscatermo]
+    //     } else {
+    //         console.warn("TERMO NÃO ENCONTRADO!");
+    //     }
 
     } else if (op === "0") {
         console.warn("PROGRAMA SENDO ENCERRADO...");
