@@ -17,3 +17,7 @@ console.log()
 console.log(dados)
 console.log()
 
+for(const info in dados) {
+    console.log((`${info.toUpperCase()} - ${dados[info]}`));
+    
+}
