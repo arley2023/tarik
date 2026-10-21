@@ -44,10 +44,7 @@ CARRINHO
                 console.warn("PRODUTO JÁ CADASTRADO! TENTE NOVAMENTE.");
                 continue;
             }
-
-            break;
-        }
-
+            
         let preco;
 
         while (true) {
