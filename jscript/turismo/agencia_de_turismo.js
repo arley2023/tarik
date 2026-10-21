@@ -1,12 +1,13 @@
 import { input } from "@inquirer/prompts";
 
-let termo = {};
+let passageiro = {};
+let idpas = 1;
 
-while (true) { console.log(`GLOSSÁRIO
+while (true) { console.log(`BOA VIAGEM TURISMO
 
-    1. CADASTRAR TERMO
-    2. BUSCAR TERMO
-    3. LISTAR TODOS
+    1. CADASTRAR PASSAGEIRO
+    2. ALTERAR DADOS PASSAGEIRO
+    3. LISTAR PASSAGEIROS
     4. REMOVER
     0. SAIR
     
@@ -15,66 +16,72 @@ while (true) { console.log(`GLOSSÁRIO
     let op = await input({message: "DIGITE O NÚMERO DA OPÇÃO DESEJADA: "});
 
     if (op === "1") {
-        console.log("CADASTRAR TERMO");
+        console.log("CADASTRAR PASSAGEIRO");
 
         let nome;
         while (true) {
-            nome = await input({message: "Digite o nome do termo: "});
+            nome = await input({message: "Digite o nome do passageiro: "});
             if (!nome.trim()) {
-                console.warn("TERMO DEVE SER PREENCHIDO! TENTE NOVAMENTE");
+                console.warn("PASSAGEIRO DEVE SER PREENCHIDO! TENTE NOVAMENTE");
                 continue;
             }
             break;
         }
 
-        let descricao;
+        let destino;
         while (true) {
-            descricao = await input({message: "Digite a descrição do termo: "});
+            destino = await input({message: "Digite o destino do passageiro: "});
             if (!descricao.trim()) {
-                console.warn("DESCRIÇÃO DEVE SER PREENCHIDA! TENTE NOVAMENTE");
+                console.warn("DESTINO DEVE SER PREENCHIDO! TENTE NOVAMENTE");
                 continue;
             }
             break;
         }
 
-        termo[nome] = descricao;
-        console.log("NOVO TERMO CADASTRADO!");
+
+
+        passageiro[idpas, nome] = destino;
+
+
+
+        console.log("NOVO PASSAGEIRO CADASTRADO!");
+        idpas++
 
     } else if (op === "2") {
-        console.log("BUSCAR TERMO");
-        let buscatermo = await input({message: "Digite o termo que deseja buscar: "});
+        console.log("BUSCAR PASSAGEIRO");
+        let buscaPASSAGEIRO = await input({message: "Digite o PASSAGEIRO que deseja buscar: "});
 
-         if (termo[buscatermo] !== undefined) {
-            console.log(`TERMO: ${buscatermo}`);
-            console.log(`DESCRIÇÃO: ${termo[buscatermo]}`);
+         if (PASSAGEIRO[buscaPASSAGEIRO] !== undefined) {
+            console.log(`PASSAGEIRO: ${buscaPASSAGEIRO}`);
+            console.log(`DESCRIÇÃO: ${PASSAGEIRO[buscaPASSAGEIRO]}`);
         } else {
-            console.warn("TERMO NÃO ENCONTRADO!");
+            console.warn("PASSAGEIRO NÃO ENCONTRADO!");
         }
 
     } else if (op === "3") {
-        console.log("LISTA DE TODOS OS TERMOS:");
+        console.log("LISTA DE TODOS OS PASSAGEIROS:");
 
-        let nomes = Object.keys(termo);
+        let nomes = Object.keys(PASSAGEIRO);
 
         if (nomes.length === 0) {
-            console.log("NENHUM TERMO CADASTRADO!");
+            console.log("NENHUM PASSAGEIRO CADASTRADO!");
         } else {
             for (let i = 0; i < nomes.length; i++) {
                 console.log(`${i + 1}. ${nomes[i]}`);
-                console.log(`   Descrição: ${termo[nomes[i]]}`);
+                console.log(`   Descrição: ${PASSAGEIRO[nomes[i]]}`);
             }
         }
 
     } else if (op === "4") {
-        console.log("BUSCAR TERMO");
-        let buscatermo = await input({message: "Digite o termo que deseja buscar: "});
+        console.log("BUSCAR PASSAGEIRO");
+        let buscaPASSAGEIRO = await input({message: "Digite o PASSAGEIRO que deseja buscar: "});
 
-        if (termo[buscatermo] !== undefined) {
-            console.log(`TERMO: ${buscatermo}`);
-            console.log(`DESCRIÇÃO: ${termo[buscatermo]}`);
-            delete termo[buscatermo]
+        if (PASSAGEIRO[buscaPASSAGEIRO] !== undefined) {
+            console.log(`PASSAGEIRO: ${buscaPASSAGEIRO}`);
+            console.log(`DESCRIÇÃO: ${PASSAGEIRO[buscaPASSAGEIRO]}`);
+            delete PASSAGEIRO[buscaPASSAGEIRO]
         } else {
-            console.warn("TERMO NÃO ENCONTRADO!");
+            console.warn("PASSAGEIRO NÃO ENCONTRADO!");
         }
 
     } else if (op === "0") {
