@@ -1,109 +1,137 @@
+
 import { input, number } from "@inquirer/prompts";
 
 let lista = [];
 let total = 0;
 let qtdprod = 0;
 
-while (true) { console.log(`CARRINHO
+while (true) {
+    console.log(`
+CARRINHO
 
     1. ADICIONAR PRODUTO
     2. VER CARRINHO
-    0. FINALZIA COMPRA
+    0. FINALIZAR COMPRA
     `);
 
-    let op = await input({message: "DIGITE O NÚMERO DA OPÇÃO DESEJADA: "});
+    let op = await input({
+        message: "DIGITE O NÚMERO DA OPÇÃO DESEJADA: "
+    });
 
     if (op === "1") {
-        console.log("CADASTRAR TERMO");
+        console.log("CADASTRAR PRODUTO");
 
         let produto;
+
         while (true) {
-            produto = await input({message: "Digite o nome do produto: "});
-            if (!produto.trim()) {
-                console.warn("PRODUTO DEVE SER PREENCHIDO! TENTE NOVAMENTE");
+            produto = await input({
+                message: "Digite o nome do produto: "
+            });
+
+            produto = produto.trim();
+
+            if (!produto) {
+                console.warn("O NOME DO PRODUTO DEVE SER PREENCHIDO!");
                 continue;
             }
+
+            // Verifica se o produto já está cadastrado
+            let existe = lista.some(
+                item => item.produto.toLowerCase() === produto.toLowerCase()
+            );
+
+            if (existe) {
+                console.warn("PRODUTO JÁ CADASTRADO! TENTE NOVAMENTE.");
+                continue;
+            }
+
             break;
         }
 
         let preco;
+
         while (true) {
-            preco = await number({message: "Digite o preço do produto: ", step: 0.1});
-            if (preco <= 0) {
-                console.warn("PREÇO DEVE SER PREENCHIDO! TENTE NOVAMENTE");
+            preco = await number({
+                message: "Digite o preço do produto: ",
+                step: 0.1,
+                min: 1,
+                required: true
+            });
+
+            if (!Number.isFinite(preco) || preco <= 0) {
+                console.warn("O PREÇO DEVE SER MAIOR QUE ZERO!");
                 continue;
             }
+
             break;
         }
 
         let quantidade;
+
         while (true) {
-            quantidade = await number({message: "Digite a quantidade: ", min: 1, required: true});
-            if (preco <= 0) {
-                console.warn("A QUANTIDADE DEVE SER PREENCHIDA! TENTE NOVAMENTE");
+            quantidade = await number({
+                message: "Digite a quantidade: ",
+                min: 1,
+                required: true
+            });
+
+            if (
+                !Number.isInteger(quantidade) ||
+                quantidade < 1
+            ) {
+                console.warn("A QUANTIDADE DEVE SER UM INTEIRO MAIOR QUE ZERO!");
                 continue;
             }
+
             break;
         }
-        termo[produto] = descricao;
-        total += (quantidade*preco)
-        qtdprod++
-        console.log("NOVO TERMO CADASTRADO!");
+
+        lista.push({
+            produto: produto,
+            preco: preco,
+            quantidade: quantidade
+        });
+
+        total += preco * quantidade;
+        qtdprod++;
+
+        console.log("NOVO PRODUTO CADASTRADO!");
         console.log(lista);
-    
-
-
 
     } else if (op === "2") {
-        console.log("BUSCAR PRODUTO");
-        let buscaproduto = await input({message: "Digite o produto que deseja buscar: "});
+        console.log("CARRINHO DE COMPRAS:");
 
-         if (termo[buscaproduto] !== undefined) {
-            console.log(`TERMO: ${buscaproduto}`);
-            console.log(`DESCRIÇÃO: ${termo[buscaproduto]}`);
+        if (lista.length === 0) {
+            console.log("NENHUM PRODUTO CADASTRADO!");
         } else {
-            console.warn("PRODUTO NÃO ENCONTRADO!");
-        }
-
-
-
-
-
-    } else if (op === "3") {
-        console.log("LISTA DE TODOS OS TERMOS:");
-
-        let produtos = Object.keys(termo);
-
-        if (produtos.length === 0) {
-            console.log("NENHUM TERMO CADASTRADO!");
-        } else {
-            for (let i = 0; i < produtos.length; i++) {
-                console.log(`${i + 1}. ${produtos[i]}`);
-                console.log(`   Descrição: ${termo[produtos[i]]}`);
+            for (let i = 0; i < lista.length; i++) {
+                console.log(`${i + 1}. Produto: ${lista[i].produto}`);
+                console.log(`   Preço unitário: R$ ${lista[i].preco.toFixed(2)}`);
+                console.log(`   Quantidade: ${lista[i].quantidade}`);
+                console.log(
+                    `   Subtotal: R$ ${(lista[i].preco * lista[i].quantidade).toFixed(2)}`
+                );
             }
+
+            console.log(`TOTAL DA COMPRA: R$ ${total.toFixed(2)}`);
+            console.log(`QUANTIDADE DE PRODUTOS CADASTRADOS: ${qtdprod}`);
         }
-
-    // } else if (op === "4") {
-    //     console.log("BUSCAR TERMO");
-    //     let buscatermo = await input({message: "Digite o termo que deseja buscar: "});
-
-    //     if (termo[buscatermo] !== undefined) {
-    //         console.log(`TERMO: ${buscatermo}`);
-    //         console.log(`DESCRIÇÃO: ${termo[buscatermo]}`);
-    //         delete termo[buscatermo]
-    //     } else {
-    //         console.warn("TERMO NÃO ENCONTRADO!");
-    //     }
 
     } else if (op === "0") {
+        console.log("\nFINALIZANDO COMPRA...");
+
+        if (lista.length === 0) {
+            console.log("CARRINHO VAZIO!");
+        } else {
+            console.log(`TOTAL DE PRODUTOS CADASTRADOS: ${qtdprod}`);
+            console.log(`VALOR TOTAL: R$ ${total.toFixed(2)}`);
+            console.log("OBRIGADO PELA COMPRA!");
+        }
+
         console.warn("PROGRAMA SENDO ENCERRADO...");
         break;
 
     } else {
-        console.error("DIGITE UMA OPÇÃO VÁLIDA!");
-    }
-
-    if (op !== "0") {
-        await input({ message: "TECLE ENTER PARA CONTINUAR!" });
+        console.warn("OPÇÃO INVÁLIDA! TENTE NOVAMENTE.");
     }
 }
