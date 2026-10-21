@@ -38,11 +38,11 @@ while (true) { console.log(`BOA VIAGEM TURISMO
             break;
         }
 
-
-
-        passageiro[idpas, nome] = destino;
-
-
+        passageiro.push({
+                    idpas: idpas,
+                    nome: nome,
+                    destino: destino
+                });
 
         console.log("NOVO PASSAGEIRO CADASTRADO!");
         idpas++
