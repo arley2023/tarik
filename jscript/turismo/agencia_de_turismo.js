@@ -1,6 +1,6 @@
-import { input } from "@inquirer/prompts";
+import { input, number } from "@inquirer/prompts";
 
-let passageiro = {};
+let passageiro = [];
 let idpas = 1;
 
 while (true) { console.log(`BOA VIAGEM TURISMO
@@ -31,7 +31,7 @@ while (true) { console.log(`BOA VIAGEM TURISMO
         let destino;
         while (true) {
             destino = await input({message: "Digite o destino do passageiro: "});
-            if (!descricao.trim()) {
+            if (!destino.trim()) {
                 console.warn("DESTINO DEVE SER PREENCHIDO! TENTE NOVAMENTE");
                 continue;
             }
@@ -39,7 +39,7 @@ while (true) { console.log(`BOA VIAGEM TURISMO
         }
 
         passageiro.push({
-                    idpas: idpas,
+                    id: idpas,
                     nome: nome,
                     destino: destino
                 });
@@ -51,9 +51,9 @@ while (true) { console.log(`BOA VIAGEM TURISMO
         console.log("BUSCAR PASSAGEIRO");
         let buscaPASSAGEIRO = await input({message: "Digite o PASSAGEIRO que deseja buscar: "});
 
-         if (PASSAGEIRO[buscaPASSAGEIRO] !== undefined) {
+         if (passageiro[buscaPASSAGEIRO] !== undefined) {
             console.log(`PASSAGEIRO: ${buscaPASSAGEIRO}`);
-            console.log(`DESCRIÇÃO: ${PASSAGEIRO[buscaPASSAGEIRO]}`);
+            console.log(`DESCRIÇÃO: ${passageiro[buscaPASSAGEIRO]}`);
         } else {
             console.warn("PASSAGEIRO NÃO ENCONTRADO!");
         }
@@ -61,28 +61,42 @@ while (true) { console.log(`BOA VIAGEM TURISMO
     } else if (op === "3") {
         console.log("LISTA DE TODOS OS PASSAGEIROS:");
 
-        let nomes = Object.keys(PASSAGEIRO);
-
-        if (nomes.length === 0) {
+        if (passageiro.length === 0) {
             console.log("NENHUM PASSAGEIRO CADASTRADO!");
         } else {
-            for (let i = 0; i < nomes.length; i++) {
-                console.log(`${i + 1}. ${nomes[i]}`);
-                console.log(`   Descrição: ${PASSAGEIRO[nomes[i]]}`);
+            for (let i = 0; i < passageiro.length; i++) {
+                console.log(`ID: ${passageiro[i].id}. Nome: ${passageiro[i].nome} - Destino: ${passageiro[i].destino}`);
             }
         }
 
-    } else if (op === "4") {
-        console.log("BUSCAR PASSAGEIRO");
-        let buscaPASSAGEIRO = await input({message: "Digite o PASSAGEIRO que deseja buscar: "});
 
-        if (PASSAGEIRO[buscaPASSAGEIRO] !== undefined) {
-            console.log(`PASSAGEIRO: ${buscaPASSAGEIRO}`);
-            console.log(`DESCRIÇÃO: ${PASSAGEIRO[buscaPASSAGEIRO]}`);
-            delete PASSAGEIRO[buscaPASSAGEIRO]
+
+
+    } else if (op === "4") {
+        console.log("EXCLUIR PASSAGEIRO");
+
+        if (passageiro.length === 0) {
+            console.log("NENHUM PASSAGEIRO CADASTRADO!");
         } else {
-            console.warn("PASSAGEIRO NÃO ENCONTRADO!");
+            for (let i = 0; i < passageiro.length; i++) {
+                console.log(`ID: ${passageiro[i].id}. Nome: ${passageiro[i].nome} - Destino: ${passageiro[i].destino}`);
+            }
         }
+
+        let selecao = await number({message: "DIGITE A ID DO PASSAGEIRO A EXCLUIR: "});
+
+
+        if (selecao > passageiro.length || selecao <= 0) {
+            console.warn("PASSAGEIRO NÃO ENCONTRADO!");
+        } else {
+            passageiro.splice(selecao, selecao--);
+        }
+
+
+
+
+
+
 
     } else if (op === "0") {
         console.warn("PROGRAMA SENDO ENCERRADO...");
