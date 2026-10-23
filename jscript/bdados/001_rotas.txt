@@ -1,0 +1,7 @@
+a - GET /produtos
+b - POST /produtos/4
+c - POST /produtos/suco de cajá
+d - PUT /produtos/2   // mudar o preço mandar todas as informações novamente
+e - DELETE /produtos/7
+f - GET /produtos/bebidas   // f1 - GET /produtos?tipo=bebidas
+
