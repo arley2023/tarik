@@ -47,15 +47,43 @@ while (true) { console.log(`BOA VIAGEM TURISMO
         console.log("NOVO PASSAGEIRO CADASTRADO!");
         idpas++
 
-    } else if (op === "2") {
-        console.log("BUSCAR PASSAGEIRO");
-        let buscaPASSAGEIRO = await input({message: "Digite o PASSAGEIRO que deseja buscar: "});
 
-         if (passageiro[buscaPASSAGEIRO] !== undefined) {
-            console.log(`PASSAGEIRO: ${buscaPASSAGEIRO}`);
-            console.log(`DESCRIÇÃO: ${passageiro[buscaPASSAGEIRO]}`);
+       
+
+
+
+
+    } else if (op === "2") {
+        console.log("ALTERAR DADOS DO PASSAGEIRO");
+        // let buscaPASSAGEIRO = await input({message: "Digite o PASSAGEIRO que deseja buscar: "});
+
+         if (passageiro.length === 0) {
+            console.log("NENHUM PASSAGEIRO CADASTRADO!");
         } else {
+            for (let i = 0; i < passageiro.length; i++) {
+                console.log(`ID: ${passageiro[i].id}. Nome: ${passageiro[i].nome} - Destino: ${passageiro[i].destino}`);
+            }
+        }
+
+        let selecao = await number({message: "DIGITE A ID DO PASSAGEIRO A EDITAR: "});
+
+        let editpas = passageiro.find((p) => p.id === selecao) 
+
+        if (!editpas) { 
             console.warn("PASSAGEIRO NÃO ENCONTRADO!");
+        } else {
+            // Os valores atuais aparecem como padrão; o usuário pode confirmar
+            // ou informar novos valores para cada campo.
+            let nome = await input({ message: "Nome do Passageiro: ", default: editpas.nome })
+
+            let destino = await input({ message: "Destino: ", default: editpas.destino })
+
+            // A variável aponta para o próprio objeto que está dentro do array;
+            // atualizar suas propriedades altera o filme cadastrado.
+            editpas.nome = nome
+            editpas.destino = destino
+            console.log("PASSAGEIRO ATUALIZADO COM SUCESSO")       
+        
         }
 
     } else if (op === "3") {
@@ -68,9 +96,6 @@ while (true) { console.log(`BOA VIAGEM TURISMO
                 console.log(`ID: ${passageiro[i].id}. Nome: ${passageiro[i].nome} - Destino: ${passageiro[i].destino}`);
             }
         }
-
-
-
 
     } else if (op === "4") {
         console.log("EXCLUIR PASSAGEIRO");
@@ -85,18 +110,14 @@ while (true) { console.log(`BOA VIAGEM TURISMO
 
         let selecao = await number({message: "DIGITE A ID DO PASSAGEIRO A EXCLUIR: "});
 
+        let removepas = passageiro.find((p) => p.id === selecao) 
 
-        if (selecao > passageiro.length || selecao <= 0) {
+        if (!removepas) { 
             console.warn("PASSAGEIRO NÃO ENCONTRADO!");
         } else {
-            passageiro.splice(selecao, selecao--);
+            passageiro.splice(passageiro.indexOf(removepas), 1)
+            console.log("Passageiro excluido");
         }
-
-
-
-
-
-
 
     } else if (op === "0") {
         console.warn("PROGRAMA SENDO ENCERRADO...");
