@@ -1,0 +1,9 @@
+
+# Dependências do Node.js
+**/node_modules/
+
+# Arquivos temporários do Office
+~$*
+
+# Arquivos temporários
+*.tmp
