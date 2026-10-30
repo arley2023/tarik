@@ -1,7 +1,5 @@
 import express from "express";
-
 import { readFile, writeFile } from 'node:fs/promises';
-
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -9,44 +7,97 @@ const PASTA = path.dirname(fileURLToPath(import.meta.url));
 const ARQUIVO = path.join(PASTA, 'jogos.json');
 
 async function lerjogos() {
-    let jogo = await readFile(ARQUIVO, 'utf-8');
+    let jogo = await readFile(ARQUIVO, "utf-8");
 
     return JSON.parse(jogo);
 };
 
-console.log(await lerjogos()); // await porque a funçao lergames é async
+async function salvarjogos(jogos){
+    let jogo = JSON.stringify(jogos, null, 4)
 
-// ------------ salvar
+    await writeFile(ARQUIVO, jogo, {encoding:"utf-8"})
+}
 
-async function salvarjogos(jogos) {
-    let jogo = JSON.stringify(jogos, null, 4);
-
-    await writeFile(ARQUIVO, jogo, {encoding: "utf-8"})
-};
 
 const app = express()
 
 app.use(express.json())
 
-app.get("/jogos", async (req,ree) => {
-    let jogo = await lerjogos()
+app.get("/jogos", async (req,res) => {
+    let jogos = await lerjogos()
 
-    res.status(200).json(jogo)
+    res.status(200).json(jogos)
 })
 
-app.get('/jogos/:id', async (req,ree) => {
-const id = Number(req.params.id);
-const contatos = await lerjogos();
-const contato = contatos.find(a => a.id === id);
-if (!jogos) {
-return res.status(404)
-.json({ erro: 'Jogo não encontrado' });
-}
-res.json(jogo);
+app.get("/jogos/:id", async(req,res) => {
+    let idAtual = Number(req.params.id)
+
+    if (idAtual === NaN){
+        return res.status(400).json({message:"O PARAMETRO ACEITO É APENAS NÚMERO!"})
+    }
+
+    let jogos = await lerjogos()
+
+    let jogo = jogos.find((c) => c.id === idAtual)
+
+    if (!jogo){
+        res.status(404).json({message:"JOGO NÃO IDENTIFICADO!"})
+    } else{
+        res.status(200).json(jogo)
+    }
+})
+
+app.post("/jogos", async(req,res) => {
+    
+    if (!req.body){
+        return res.status(400).json({message:"NÃO FORAM ENVIADAS INFORMAÇÕES PARA CADASTRO."})
+    }
+
+    let {id, titulo, plataforma, preco} = req.body
+
+    if (!id || !titulo || !plataforma || !preco){
+        res.status(400).json({message:"INFORMAÇÔES FALTANTE. ENVIE ID, TITULO, PLATAFORMA E PRECO."})
+    }else{
+        // 1. Ler o arquivo
+        let jogos = await lerjogos()
+
+        // 2. Manipular os dados
+        let novojogo = {
+            id, titulo, plataforma, preco
+        }
+        jogos.push(novojogo)
+
+        // 3. Salvar os dados no arquivo
+        await salvarjogos(jogos)
+
+        // 4. Mandar resposta ao servidor
+        res.send(201).status({message:"JOGA CADASTRADO COM SUCESSO", jogo: novojogo})
+    }
+
+})
+
+
+
+
+app.delete('/jogos/:id', async (req, res) => {
+    let idAtual = Number(req.params.id)
+
+    let jogos = await lerjogos()
+
+    let jogo = jogos.find((a) => a.id === idAtual)
+
+    if (!jogo){
+        res.status(404).json({message:"ID Informado Não Existe"})
+    }
+    else{
+        let posicaojogo = jogos.indexOf(jogo)
+        jogos.splice(posicaojogo, 1)
+        await salvarjogos(jogos);
+        res.status(200).json({message: "jogo removido com sucesso", removido: jogo })
+    }
 });
 
-// Inicia o servidor na porta 3000
 app.listen(3000, () => {
-    // Exibe no terminal o endereço para acessar o servidor
-    console.log("SERVIDOR RODANDO NO ENDEREÇO -> http://localhost:3000")
+    console.log("SERVIDOR INICIADO NO ENDEREÇO http://localhost:3000")
 })
+

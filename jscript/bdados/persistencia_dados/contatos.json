@@ -1,68 +1,22 @@
 [
-    {
-        "id": 1,
-        "titulo": "God of War I",
-        "plataforma": "Play Station 3",
-        "preco": 305.00
-    },
-    {
-        "id": 2,
-        "titulo": "God of War II",
-        "plataforma": "PlayStation 2",
-        "preco": 150.00
-    },
-    {
-        "id": 3,
-        "titulo": "God of War III",
-        "plataforma": "PlayStation 3",
-        "preco": 180.00
-    },
-    {
-        "id": 4,
-        "titulo": "The Last of Us",
-        "plataforma": "PlayStation 3",
-        "preco": 120.00
-    },
-    {
-        "id": 5,
-        "titulo": "GTA V",
-        "plataforma": "PlayStation 4",
-        "preco": 200.00
-    },
-    {
-        "id": 6,
-        "titulo": "Red Dead Redemption 2",
-        "plataforma": "PlayStation 4",
-        "preco": 250.00
-    },
-    {
-        "id": 7,
-        "titulo": "Spider-Man",
-        "plataforma": "PlayStation 4",
-        "preco": 220.00
-    },
-    {
-        "id": 8,
-        "titulo": "Horizon Zero Dawn",
-        "plataforma": "PlayStation 4",
-        "preco": 170.00
-    },
-    {
-        "id": 9,
-        "titulo": "Uncharted 4",
-        "plataforma": "PlayStation 4",
-        "preco": 140.00
-    },
-    {
-        "id": 10,
-        "titulo": "Gran Turismo 7",
-        "plataforma": "PlayStation 5",
-        "preco": 280.00
-    },
-    {
-        "id": 11,
-        "titulo": "Elden Ring",
-        "plataforma": "PlayStation 5",
-        "preco": 300.00
-    }
+        {
+            "id": 1,
+            "nome": "Marquinhos",
+            "telefone": "85123456"
+        },
+        {
+            "id": 2,
+            "nome": "Joaquim",
+            "telefone": "123457"
+        },
+        {
+            "id": 3,
+            "nome": "Maria",
+            "telefone": "123458"
+        },
+        {
+            "id": 4,
+            "nome": "Jones",
+            "telefone": "1234569"
+        }
 ]

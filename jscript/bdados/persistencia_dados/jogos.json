@@ -1,68 +1,44 @@
 [
     {
         "id": 1,
-        "titulo": "God of War I",
-        "plataforma": "Play Station 3",
-        "preco": 305.00
+        "titulo": "God of War III",
+        "plataforma": "PlayStation 3",
+        "preco": 149.9
     },
     {
         "id": 2,
-        "titulo": "God of War II",
-        "plataforma": "PlayStation 2",
-        "preco": 150.00
-    },
-    {
-        "id": 3,
-        "titulo": "God of War III",
+        "titulo": "The Last of Us",
         "plataforma": "PlayStation 3",
-        "preco": 180.00
+        "preco": 199.9
     },
     {
         "id": 4,
-        "titulo": "The Last of Us",
-        "plataforma": "PlayStation 3",
-        "preco": 120.00
+        "titulo": "Minecraft",
+        "plataforma": "PC",
+        "preco": 79.9
     },
     {
         "id": 5,
-        "titulo": "GTA V",
+        "titulo": "FIFA 23",
         "plataforma": "PlayStation 4",
-        "preco": 200.00
+        "preco": 129.9
     },
     {
         "id": 6,
-        "titulo": "Red Dead Redemption 2",
-        "plataforma": "PlayStation 4",
-        "preco": 250.00
+        "titulo": "Resident Evil 4",
+        "plataforma": "Xbox One",
+        "preco": 159.9
     },
     {
         "id": 7,
-        "titulo": "Spider-Man",
-        "plataforma": "PlayStation 4",
-        "preco": 220.00
+        "titulo": "Super Mario Odyssey",
+        "plataforma": "Nintendo Switch",
+        "preco": 249.9
     },
     {
         "id": 8,
-        "titulo": "Horizon Zero Dawn",
+        "titulo": "Red Dead Redemption 2",
         "plataforma": "PlayStation 4",
-        "preco": 170.00
-    },
-    {
-        "id": 9,
-        "titulo": "Uncharted 4",
-        "plataforma": "PlayStation 4",
-        "preco": 140.00
-    },
-    {
-        "id": 10,
-        "titulo": "Gran Turismo 7",
-        "plataforma": "PlayStation 5",
-        "preco": 280.00
-    },
-    {
-        "id": 11,
-        "titulo": "Elden Ring",
-        "plataforma": "PlayStation 5",
-        "preco": 300.00
+        "preco": 179.9
     }
 ]
