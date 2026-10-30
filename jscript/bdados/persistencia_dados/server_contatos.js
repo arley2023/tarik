@@ -6,6 +6,7 @@ import { fileURLToPath } from "node:url";
 const PASTA = path.dirname(fileURLToPath(import.meta.url))
 const ARQUIVO = path.join(PASTA, "contatos.json")
 
+
 async function lerContatos(){
     let texto = await readFile(ARQUIVO, "utf-8")
 
@@ -47,10 +48,6 @@ app.get("/contatos/:id", async(req,res) =>{
     }
 })
 
-
-
-
-
 app.post("/contatos", async (req,res) =>{
 
     if (!req.body){
@@ -75,13 +72,57 @@ app.post("/contatos", async (req,res) =>{
         await salvarContatos(contatos)
 
         // 4. Mandar resposta ao servidor
-        res.send(201).status({message:"CONTATO CADASTRADO COM SUCESSO", contato: novoContato})
+        res.status(201).json({message:"CONTATO CADASTRADO COM SUCESSO", contato: novoContato})
+    }
+})
+
+app.put("/contatos/:id", async(req,res) => {
+    let idAtual = Number(req.params.id)
+
+    let contatos = await lerContatos()
+
+    let contato = contatos.find((c) => c.id === idAtual)
+
+    if(!contato){
+        res.status(404).json({message:"CONTATO NÃO ENCONTRADO"})
+    }else{
+        let {nome, telefone} = req.body
+
+        if (!nome || !telefone){
+            res.status(400).json({message:"FALTAM INFORMAÇÕES PARA EDIÇÃO"})
+        }
+        else{
+            contato.nome = nome
+            contato.telefone = telefone
+
+            await salvarContatos(contatos)
+
+            res.status(200).json({message:"ALTERAÇÃO REALIZADA COM SUCESSO", alterado: contato})
+        }
     }
 })
 
 
+app.delete("/contatos/:id", async (req,res) =>{
+    let idAtual = Number(req.params.id)
 
+    let contatos = await lerContatos()
+    
+    let contato = contatos.find((c) => c.id === idAtual)
 
+    if (!contato){
+        res.status(404).json({message:"CONTATO NÃO ENCONTRADO!"})
+    } else{
+        let posicaoContato = contatos.indexOf(contato)
+
+        contatos.splice(posicaoContato, 1)
+
+        await salvarContatos(contatos)
+
+        res.status(200).json({message:"CONTATO REMOVIDO COM SUCESSO", removido: contato})
+    }
+
+})
 
 
 app.listen(3000, () => {
