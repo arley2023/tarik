@@ -77,7 +77,44 @@ app.post("/jogos", async(req,res) => {
 })
 
 
+app.put("/jogos/:id", async (req, res) => {
+    let idjogo = Number(req.params.id)
 
+    let jogos = await lerjogos()
+
+    let jogo = jogos.find((a) => a.id === idjogo)
+
+    if (!jogo) {
+        return res.status(404).json({
+            message: "ID Informado Não Existe"
+        })
+    }
+
+    if (!req.body) {
+        return res.status(400).json({
+            message: "NÃO FORAM ENVIADAS INFORMAÇÕES PARA ATUALIZAR"
+        })
+    }
+
+    let { titulo, plataforma, preco } = req.body
+
+    if (!titulo || !plataforma || !preco) {
+        return res.status(400).json({
+            message: "FALTAM INFORMAÇÕES PARA EDIÇÃO"
+        })
+    }
+
+    jogo.titulo = titulo
+    jogo.plataforma = plataforma
+    jogo.preco = preco
+
+    await salvarjogos(jogos)
+
+    res.status(200).json({
+        message: "JOGO ATUALIZADO COM SUCESSO",
+        dados: jogo
+    })
+})
 
 app.delete('/jogos/:id', async (req, res) => {
     let idAtual = Number(req.params.id)
