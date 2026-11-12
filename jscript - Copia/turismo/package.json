@@ -1,0 +1,7 @@
+{
+  "name": "atividade7",
+  "type": "module",
+  "dependencies": {
+    "@inquirer/prompts": "^8.7.2"
+  }
+}

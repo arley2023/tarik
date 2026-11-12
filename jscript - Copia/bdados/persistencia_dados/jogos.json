@@ -1,0 +1,44 @@
+[
+    {
+        "id": 1,
+        "titulo": "Arley of War III",
+        "plataforma": "PlayStation 3",
+        "preco": 149
+    },
+    {
+        "id": 2,
+        "titulo": "The Last of Us",
+        "plataforma": "PlayStation 3",
+        "preco": 199.9
+    },
+    {
+        "id": 4,
+        "titulo": "Minecraft",
+        "plataforma": "PC",
+        "preco": 79.9
+    },
+    {
+        "id": 5,
+        "titulo": "FIFA 23",
+        "plataforma": "PlayStation 4",
+        "preco": 129.9
+    },
+    {
+        "id": 6,
+        "titulo": "Resident Evil 4",
+        "plataforma": "Xbox One",
+        "preco": 159.9
+    },
+    {
+        "id": 7,
+        "titulo": "Super Mario Odyssey",
+        "plataforma": "Nintendo Switch",
+        "preco": 249.9
+    },
+    {
+        "id": 8,
+        "titulo": "Red Dead Redemption 2",
+        "plataforma": "PlayStation 4",
+        "preco": 179.9
+    }
+]
