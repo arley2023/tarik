@@ -1,23 +1,20 @@
-DROP TABLE IF EXISTS consultas;
-DROP TABLE IF EXISTS pacientes;
-DROP TABLE IF EXISTS medicos;
-DROP TABLE IF EXISTS convenios;
+DROP TABLE IF EXISTS consultas, pacientes, medicos, convenios;
 
 CREATE TABLE convenios (
-	cod_conv serial PRIMARY KEY,
+	cod_conv INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
 	nome_conv varchar(60) UNIQUE NOT NULL,
 	fone_conv character(11) NOT NULL
 	);
 
 CREATE TABLE medicos (
-	cod_med serial PRIMARY KEY,
+	cod_med INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
 	crm_med character(8) UNIQUE NOT NULL,
 	nome_med varchar(60) NOT NULL,
 	especialidade_med varchar(60) NOT NULL
 	);
 
 CREATE TABLE pacientes (
-	cod_pac serial PRIMARY KEY,
+	cod_pac INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
 	nome_pac varchar(60) NOT NULL,
 	cpf_pac character(11) UNIQUE NOT NULL,
 	fone_pac character(11) NOT NULL,
@@ -26,7 +23,7 @@ CREATE TABLE pacientes (
 	);
 
 CREATE TABLE consultas (
-	cod_cons serial PRIMARY KEY,
+	cod_cons INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
 	data_cons DATE NOT NULL,
 	hora_cons TIME NOT NULL,
 	diagostico_cons varchar(256),
